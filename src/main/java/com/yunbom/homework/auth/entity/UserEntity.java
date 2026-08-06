@@ -1,15 +1,13 @@
 package com.yunbom.homework.auth.entity;
 
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor // 테스트용 생성자
+@Builder
 public class UserEntity {
 
     @Id
