@@ -18,7 +18,6 @@ public class AuthService {
 
     private final PasswordEncoder passwordEncoder;
 
-
     public void signup(SignupRequest request){
 
         if(userRepository.findByEmail(request.getEmail()).isPresent()){
