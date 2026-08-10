@@ -1,4 +1,6 @@
 spring:
+  jwt:
+    secret: ${JWT_SECRET}
   application:
     name: homework
   datasource:
