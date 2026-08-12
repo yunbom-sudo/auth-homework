@@ -7,4 +7,7 @@ import lombok.Getter;
 @AllArgsConstructor
 public class BlogResponse {
 
+    private Long id;
+    private String title;
+    private String content;
 }

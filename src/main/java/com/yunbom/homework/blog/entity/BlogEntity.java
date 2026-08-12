@@ -2,7 +2,7 @@ package com.yunbom.homework.blog.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.springframework.context.annotation.Configuration;
+
 
 @Entity
 @Getter
