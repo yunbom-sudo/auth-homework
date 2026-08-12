@@ -5,10 +5,9 @@ import com.yunbom.homework.blog.dto.response.BlogResponse;
 import com.yunbom.homework.blog.service.BlogService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-@Controller
+@RestController
 @RequestMapping("/blog")
 @RequiredArgsConstructor
 public class BlogController {

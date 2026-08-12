@@ -18,4 +18,9 @@ public class BlogEntity {
 
     @Column(columnDefinition = "TEXT")
     private String content;
+
+    public void update(String title, String content){
+        this.title = title;
+        this.content = content;
+    }
 }
