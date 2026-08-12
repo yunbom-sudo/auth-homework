@@ -8,7 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/blog")
+@RequestMapping("/blogs")
 @RequiredArgsConstructor
 public class BlogController {
 
@@ -20,15 +20,25 @@ public class BlogController {
         return blogService.createBlog(request);
     }
 
-    @ResponseStatus(HttpStatus.OK)
     @GetMapping("/{id}")
     public BlogResponse findById(@PathVariable Long id){
         return blogService.findBlogById(id);
     }
 
-    @ResponseStatus(HttpStatus.OK)
-    @GetMapping("/{title}")
-    public BlogResponse findByTitle(@PathVariable String title){
+    @GetMapping
+    public BlogResponse findByTitle(@RequestParam String title){
         return blogService.findBlogByTitle(title);
     }
+
+    @PutMapping("/{id}")
+    public BlogResponse updateBlog(@PathVariable Long id,@RequestBody BlogRequest request){
+        return blogService.updateBlog(id,request);
+    }
+
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @DeleteMapping("/{id}")
+    public void deleteBlog(@PathVariable Long id){
+        blogService.deleteBlog(id);
+    }
+
 }

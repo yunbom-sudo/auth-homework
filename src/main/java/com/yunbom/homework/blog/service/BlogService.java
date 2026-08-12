@@ -12,7 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class BlogService{
 
-    public final BlogRepository blogRepository;
+    private final BlogRepository blogRepository;
 
     @Transactional
     public BlogResponse createBlog(BlogRequest request){
@@ -74,38 +74,13 @@ public class BlogService{
     }
 
     @Transactional
-    public BlogResponse updateByTitle(String title, BlogRequest request){
-
-        BlogEntity blog = blogRepository.findByTitle(title)
-                .orElseThrow(() -> new RuntimeException("해당 제목의 게시글은 존재하지 않습니다."));
-
-        blog.update(
-                request.getTitle(),
-                request.getContent()
-        );
-
-        return new BlogResponse(
-                blog.getId(),
-                blog.getTitle(),
-                blog.getContent()
-        );
-    }
-
-    @Transactional
     public void deleteBlog(Long id){
 
         BlogEntity blog = blogRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("해당 id의 개시글은 존재하지 않습니다."));
+                .orElseThrow(() -> new RuntimeException("해당 id의 게시글은 존재하지 않습니다."));
 
         blogRepository.delete(blog);
     }
-    @Transactional
-    public void deleteByTitle(String title){
 
-        BlogEntity blog = blogRepository.findByTitle(title)
-                .orElseThrow(() -> new RuntimeException("해당 제목의 게시글은 존재하지 않습니다."));
-
-        blogRepository.delete(blog);
-    }
 
 }
