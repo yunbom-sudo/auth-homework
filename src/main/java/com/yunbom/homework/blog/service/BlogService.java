@@ -99,5 +99,13 @@ public class BlogService{
 
         blogRepository.delete(blog);
     }
+    @Transactional
+    public void deleteByTitle(String title){
+
+        BlogEntity blog = blogRepository.findByTitle(title)
+                .orElseThrow(() -> new RuntimeException("해당 제목의 게시글은 존재하지 않습니다."));
+
+        blogRepository.delete(blog);
+    }
 
 }
