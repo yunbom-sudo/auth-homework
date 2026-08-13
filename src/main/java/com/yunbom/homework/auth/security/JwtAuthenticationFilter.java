@@ -1,5 +1,6 @@
 package com.yunbom.homework.auth.security;
 
+import com.yunbom.homework.auth.entity.Role;
 import io.jsonwebtoken.Claims;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -44,12 +45,14 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
             String email = claims.get("email", String.class);
 
+            String role = claims.get("role",String.class);
+
             Authentication authentication =
                     new UsernamePasswordAuthenticationToken(
                             email,
                             null,
                             List.of(
-                                    new SimpleGrantedAuthority("ROLE_USER")
+                                    new SimpleGrantedAuthority("ROLE_"+role)
                             )
                     );
 
