@@ -8,6 +8,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class BlogService{
@@ -44,15 +46,21 @@ public class BlogService{
     }
 
     @Transactional(readOnly = true)
-    public BlogResponse findBlogByTitle(String title){
+    public List<BlogResponse> findBlogByTitle(String title){
 
-        BlogEntity blog = blogRepository.findByTitle(title)
-                .orElseThrow(() -> new RuntimeException("해당 제목의 게시글이 존재하지 않습니다."));
-        return new BlogResponse(
-                blog.getId(),
-                blog.getTitle(),
-                blog.getContent()
-        );
+        List<BlogEntity> blogs = blogRepository.findByTitle(title);
+
+        if(blogs.isEmpty()){
+            throw new RuntimeException("해당 제목의 게시글이 존재하지 않습니다.");
+        }
+
+        return blogs.stream()
+                .map(blog -> new BlogResponse(
+                    blog.getId(),
+                    blog.getTitle(),
+                    blog.getContent()
+        ))
+                .toList();
     }
 
     @Transactional

@@ -8,6 +8,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/blogs")
 @RequiredArgsConstructor
@@ -27,7 +29,7 @@ public class BlogController {
     }
 
     @GetMapping
-    public BlogResponse findByTitle(@RequestParam String title){
+    public List<BlogResponse> findByTitle(@RequestParam String title){
         return blogService.findBlogByTitle(title);
     }
 
