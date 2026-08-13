@@ -21,7 +21,9 @@ public class BlogService{
     @Transactional
     public BlogResponse createBlog(BlogRequest request){
 
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Authentication authentication =
+                SecurityContextHolder.getContext().getAuthentication();
+
 
         BlogEntity blog = BlogEntity.builder()
                 .email(authentication.getName())
@@ -74,8 +76,16 @@ public class BlogService{
     @Transactional
     public BlogResponse updateBlog(Long id,BlogRequest request){
 
+        Authentication authentication =
+                SecurityContextHolder.getContext().getAuthentication();
+
+
         BlogEntity blog = blogRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("해당 id의 게시글이 존재하지 않습니다."));
+
+        if (!blog.getEmail().equals(authentication.getName())) {
+            throw new RuntimeException("해당 게시글의 게시자만 수정할 수 있습니다.");
+        }
 
         blog.update(
                 request.getTitle(),
@@ -93,8 +103,16 @@ public class BlogService{
     @Transactional
     public void deleteBlog(Long id){
 
+        Authentication authentication =
+                SecurityContextHolder.getContext().getAuthentication();
+
+
         BlogEntity blog = blogRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("해당 id의 게시글은 존재하지 않습니다."));
+
+        if (!blog.getEmail().equals(authentication.getName())) {
+            throw new RuntimeException("해당 게시글의 게시자만 삭제할 수 있습니다.");
+        }
 
         blogRepository.delete(blog);
     }
