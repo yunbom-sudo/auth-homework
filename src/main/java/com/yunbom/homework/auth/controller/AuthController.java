@@ -5,6 +5,7 @@ import com.yunbom.homework.auth.dto.request.SignupRequest;
 import com.yunbom.homework.auth.dto.response.SignupResponse;
 import com.yunbom.homework.auth.dto.response.TokenResponse;
 import com.yunbom.homework.auth.service.AuthService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.antlr.v4.runtime.Token;
 import org.springframework.http.HttpStatus;
@@ -19,13 +20,13 @@ public class AuthController {
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/signup")
-    public SignupResponse signup(@RequestBody SignupRequest request){
+    public SignupResponse signup(@Valid @RequestBody SignupRequest request){
         return authService.signup(request);
     }
 
     @ResponseStatus(HttpStatus.OK)
     @PostMapping("/login")
-    public TokenResponse login(@RequestBody LoginRequest request){
+    public TokenResponse login(@Valid @RequestBody LoginRequest request){
         return authService.login(request);
     }
 
