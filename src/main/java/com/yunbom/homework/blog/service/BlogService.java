@@ -5,6 +5,8 @@ import com.yunbom.homework.blog.dto.response.BlogResponse;
 import com.yunbom.homework.blog.entity.BlogEntity;
 import com.yunbom.homework.blog.repository.BlogRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,7 +21,10 @@ public class BlogService{
     @Transactional
     public BlogResponse createBlog(BlogRequest request){
 
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
         BlogEntity blog = BlogEntity.builder()
+                .email(authentication.getName())
                 .title(request.getTitle())
                 .content(request.getContent())
                 .build();
@@ -28,6 +33,7 @@ public class BlogService{
 
         return new BlogResponse(
                 blog.getId(),
+                blog.getEmail(),
                 blog.getTitle(),
                 blog.getContent()
         );
@@ -40,6 +46,7 @@ public class BlogService{
                 .orElseThrow(() -> new RuntimeException("해당 id에 게시글이 존재하지 않습니다."));
         return new BlogResponse(
                 blog.getId(),
+                blog.getEmail(),
                 blog.getTitle(),
                 blog.getContent()
         );
@@ -57,6 +64,7 @@ public class BlogService{
         return blogs.stream()
                 .map(blog -> new BlogResponse(
                     blog.getId(),
+                    blog.getEmail(),
                     blog.getTitle(),
                     blog.getContent()
         ))
@@ -76,6 +84,7 @@ public class BlogService{
 
         return new BlogResponse(
                 blog.getId(),
+                blog.getEmail(),
                 blog.getTitle(),
                 blog.getContent()
         );

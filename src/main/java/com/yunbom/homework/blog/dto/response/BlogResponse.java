@@ -8,6 +8,7 @@ import lombok.Getter;
 public class BlogResponse {
 
     private Long id;
+    private String email;
     private String title;
     private String content;
 }
