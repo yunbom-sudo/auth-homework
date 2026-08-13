@@ -30,9 +30,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             FilterChain filterChain
     ) throws ServletException, IOException {
 
-
         String authHeader = request.getHeader("Authorization");
 
+        System.out.println("Authorization = " + authHeader);
 
         if(authHeader != null && authHeader.startsWith("Bearer ")) {
 
@@ -45,6 +45,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
             String email = claims.get("email", String.class);
 
+            System.out.println("JWT email = " + email);
 
             Authentication authentication =
                     new UsernamePasswordAuthenticationToken(
