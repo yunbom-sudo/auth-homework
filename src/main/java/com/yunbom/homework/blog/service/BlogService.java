@@ -42,6 +42,21 @@ public class BlogService{
     }
 
     @Transactional(readOnly = true)
+    public List<BlogResponse> findAll(){
+
+        List<BlogEntity> blogs = blogRepository.findAll();
+
+        return blogs.stream()
+                .map(blog -> new BlogResponse(
+                        blog.getId(),
+                        blog.getEmail(),
+                        blog.getTitle(),
+                        blog.getContent()
+                ))
+                .toList();
+    }
+
+    @Transactional(readOnly = true)
     public BlogResponse findBlogById(Long id){
 
         BlogEntity blog = blogRepository.findById(id)
