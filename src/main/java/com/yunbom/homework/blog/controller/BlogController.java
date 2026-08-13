@@ -20,6 +20,7 @@ public class BlogController {
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
     public BlogResponse createBlog(@Valid @RequestBody BlogRequest request){
+        System.out.println("BLOG CONTROLLER ENTER");
         return blogService.createBlog(request);
     }
 
