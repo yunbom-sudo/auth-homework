@@ -39,3 +39,5 @@ out/
 ### Spring ###
 application*.yml
 application*.yaml.DS_Store
+
+.env
