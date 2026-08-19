@@ -8,7 +8,7 @@ import lombok.Getter;
 @AllArgsConstructor
 public class SignupResponse {
 
-    private Long id;
+    private Long userId;
 
     private String email;
 

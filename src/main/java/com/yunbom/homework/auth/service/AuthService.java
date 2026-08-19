@@ -41,7 +41,7 @@ public class AuthService {
         UserEntity savedUser = userRepository.save(userEntity);
 
         SignupResponse signupResponse = new SignupResponse(
-                savedUser.getId(),
+                savedUser.getUserId(),
                 savedUser.getEmail(),
                 savedUser.getRole()
         );
