@@ -4,10 +4,10 @@ spring:
   application:
     name: homework
   datasource:
-    url: jdbc:mysql://localhost:3309/homework
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    username: root
-    password: ${PASSWORD}
+    url: ${DB_URL}
+    driver-class-name: ${DB_DRIVER_CLASS_NAME}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
   jpa:
     hibernate:
       ddl-auto: update

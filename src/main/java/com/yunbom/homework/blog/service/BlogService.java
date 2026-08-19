@@ -18,6 +18,13 @@ public class BlogService{
 
     private final BlogRepository blogRepository;
 
+    private Long getCurrentUserId(){
+        Authentication authentication =
+                SecurityContextHolder.getContext().getAuthentication();
+
+        return (Long) authentication.getPrincipal();
+    }
+
     private BlogResponse toResponse(BlogEntity blog){
         return new BlogResponse(
                 blog.getBlogId(),
@@ -30,11 +37,8 @@ public class BlogService{
     @Transactional
     public BlogResponse createBlog(BlogRequest request){
 
-        Authentication authentication =
-                SecurityContextHolder.getContext().getAuthentication();
-
         BlogEntity blog = BlogEntity.builder()
-                .authorId((Long) authentication.getPrincipal())
+                .authorId(getCurrentUserId())
                 .title(request.getTitle())
                 .content(request.getContent())
                 .build();
@@ -80,14 +84,10 @@ public class BlogService{
     @Transactional
     public BlogResponse updateBlog(Long id,BlogRequest request){
 
-        Authentication authentication =
-                SecurityContextHolder.getContext().getAuthentication();
-
-
         BlogEntity blog = blogRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("해당 id의 게시글이 존재하지 않습니다."));
 
-        if (!blog.getAuthorId().equals(authentication.getPrincipal())) {
+        if (!blog.getAuthorId().equals(getCurrentUserId())) {
             throw new RuntimeException("해당 게시글의 게시자만 수정할 수 있습니다.");
         }
 
@@ -102,14 +102,10 @@ public class BlogService{
     @Transactional
     public void deleteBlog(Long id){
 
-        Authentication authentication =
-                SecurityContextHolder.getContext().getAuthentication();
-
-
         BlogEntity blog = blogRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("해당 id의 게시글은 존재하지 않습니다."));
 
-        if (!blog.getAuthorId().equals(authentication.getName())) {
+        if (!blog.getAuthorId().equals(getCurrentUserId())) {
             throw new RuntimeException("해당 게시글의 게시자만 삭제할 수 있습니다.");
         }
 

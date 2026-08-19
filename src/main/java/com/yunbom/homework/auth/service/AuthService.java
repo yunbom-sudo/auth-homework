@@ -23,6 +23,14 @@ public class AuthService {
 
     private final JwtProvider jwtProvider;
 
+    private SignupResponse toSignupResponse(UserEntity user){
+        return new SignupResponse(
+                user.getUserId(),
+                user.getEmail(),
+                user.getRole()
+        );
+    }
+
     @Transactional
     public SignupResponse signup(SignupRequest request){
 
@@ -40,13 +48,7 @@ public class AuthService {
 
         UserEntity savedUser = userRepository.save(userEntity);
 
-        SignupResponse signupResponse = new SignupResponse(
-                savedUser.getUserId(),
-                savedUser.getEmail(),
-                savedUser.getRole()
-        );
-
-        return signupResponse;
+        return toSignupResponse(savedUser);
     }
 
     @Transactional(readOnly = true)
