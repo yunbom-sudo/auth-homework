@@ -14,7 +14,7 @@ public class BlogEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long blogId;
 
-    private String authorId;
+    private Long authorId;
 
     private String title;
 

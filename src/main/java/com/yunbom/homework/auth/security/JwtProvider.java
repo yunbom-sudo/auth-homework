@@ -26,7 +26,7 @@ public class JwtProvider {
 
         Claims claims = Jwts.claims();
 
-        claims.put("email", entity.getEmail());
+        claims.put("id",entity.getUserId());
         claims.put("role", entity.getRole());
 
         Date now = new Date();

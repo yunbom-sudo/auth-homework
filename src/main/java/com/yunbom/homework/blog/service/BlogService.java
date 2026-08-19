@@ -34,7 +34,7 @@ public class BlogService{
                 SecurityContextHolder.getContext().getAuthentication();
 
         BlogEntity blog = BlogEntity.builder()
-                .authorId(authentication.getName())
+                .authorId((Long) authentication.getPrincipal())
                 .title(request.getTitle())
                 .content(request.getContent())
                 .build();
@@ -87,7 +87,7 @@ public class BlogService{
         BlogEntity blog = blogRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("해당 id의 게시글이 존재하지 않습니다."));
 
-        if (!blog.getAuthorId().equals(authentication.getName())) {
+        if (!blog.getAuthorId().equals(authentication.getPrincipal())) {
             throw new RuntimeException("해당 게시글의 게시자만 수정할 수 있습니다.");
         }
 
