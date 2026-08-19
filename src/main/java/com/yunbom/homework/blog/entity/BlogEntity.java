@@ -12,7 +12,7 @@ import lombok.*;
 public class BlogEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long blogId;
 
     private String authorEmail;
 

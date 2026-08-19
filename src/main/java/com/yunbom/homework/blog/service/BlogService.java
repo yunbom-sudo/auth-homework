@@ -20,7 +20,7 @@ public class BlogService{
 
     private BlogResponse toResponse(BlogEntity blog){
         return new BlogResponse(
-                blog.getId(),
+                blog.getBlogId(),
                 blog.getAuthorEmail(),
                 blog.getTitle(),
                 blog.getContent()
