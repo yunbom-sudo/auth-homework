@@ -40,11 +40,13 @@ public class AuthService {
 
         UserEntity savedUser = userRepository.save(userEntity);
 
-        return new SignupResponse(
+        SignupResponse signupResponse = new SignupResponse(
                 savedUser.getId(),
                 savedUser.getEmail(),
                 savedUser.getRole()
         );
+
+        return signupResponse;
     }
 
     @Transactional(readOnly = true)

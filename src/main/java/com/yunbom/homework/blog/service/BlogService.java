@@ -26,7 +26,7 @@ public class BlogService{
 
 
         BlogEntity blog = BlogEntity.builder()
-                .email(authentication.getName())
+                .authorEmail(authentication.getName())
                 .title(request.getTitle())
                 .content(request.getContent())
                 .build();
@@ -35,7 +35,7 @@ public class BlogService{
 
         return new BlogResponse(
                 blog.getId(),
-                blog.getEmail(),
+                blog.getAuthorEmail(),
                 blog.getTitle(),
                 blog.getContent()
         );
@@ -49,7 +49,7 @@ public class BlogService{
         return blogs.stream()
                 .map(blog -> new BlogResponse(
                         blog.getId(),
-                        blog.getEmail(),
+                        blog.getAuthorEmail(),
                         blog.getTitle(),
                         blog.getContent()
                 ))
@@ -63,7 +63,7 @@ public class BlogService{
                 .orElseThrow(() -> new RuntimeException("해당 id에 게시글이 존재하지 않습니다."));
         return new BlogResponse(
                 blog.getId(),
-                blog.getEmail(),
+                blog.getAuthorEmail(),
                 blog.getTitle(),
                 blog.getContent()
         );
@@ -81,7 +81,7 @@ public class BlogService{
         return blogs.stream()
                 .map(blog -> new BlogResponse(
                     blog.getId(),
-                    blog.getEmail(),
+                    blog.getAuthorEmail(),
                     blog.getTitle(),
                     blog.getContent()
         ))
@@ -98,7 +98,7 @@ public class BlogService{
         BlogEntity blog = blogRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("해당 id의 게시글이 존재하지 않습니다."));
 
-        if (!blog.getEmail().equals(authentication.getName())) {
+        if (!blog.getAuthorEmail().equals(authentication.getName())) {
             throw new RuntimeException("해당 게시글의 게시자만 수정할 수 있습니다.");
         }
 
@@ -109,7 +109,7 @@ public class BlogService{
 
         return new BlogResponse(
                 blog.getId(),
-                blog.getEmail(),
+                blog.getAuthorEmail(),
                 blog.getTitle(),
                 blog.getContent()
         );
@@ -125,7 +125,7 @@ public class BlogService{
         BlogEntity blog = blogRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("해당 id의 게시글은 존재하지 않습니다."));
 
-        if (!blog.getEmail().equals(authentication.getName())) {
+        if (!blog.getAuthorEmail().equals(authentication.getName())) {
             throw new RuntimeException("해당 게시글의 게시자만 삭제할 수 있습니다.");
         }
 
