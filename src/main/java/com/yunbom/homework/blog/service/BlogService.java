@@ -18,6 +18,15 @@ public class BlogService{
 
     private final BlogRepository blogRepository;
 
+    private BlogResponse toResponse(BlogEntity blog){
+        return new BlogResponse(
+                blog.getId(),
+                blog.getAuthorEmail(),
+                blog.getTitle(),
+                blog.getContent()
+        );
+    }
+
     @Transactional
     public BlogResponse createBlog(BlogRequest request){
 
@@ -33,12 +42,7 @@ public class BlogService{
 
         blogRepository.save(blog);
 
-        return new BlogResponse(
-                blog.getId(),
-                blog.getAuthorEmail(),
-                blog.getTitle(),
-                blog.getContent()
-        );
+        return toResponse(blog);
     }
 
     @Transactional(readOnly = true)
@@ -47,12 +51,7 @@ public class BlogService{
         List<BlogEntity> blogs = blogRepository.findAll();
 
         return blogs.stream()
-                .map(blog -> new BlogResponse(
-                        blog.getId(),
-                        blog.getAuthorEmail(),
-                        blog.getTitle(),
-                        blog.getContent()
-                ))
+                .map(this::toResponse)
                 .toList();
     }
 
@@ -61,12 +60,8 @@ public class BlogService{
 
         BlogEntity blog = blogRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("해당 id에 게시글이 존재하지 않습니다."));
-        return new BlogResponse(
-                blog.getId(),
-                blog.getAuthorEmail(),
-                blog.getTitle(),
-                blog.getContent()
-        );
+
+        return toResponse(blog);
     }
 
     @Transactional(readOnly = true)
@@ -79,12 +74,7 @@ public class BlogService{
         }
 
         return blogs.stream()
-                .map(blog -> new BlogResponse(
-                    blog.getId(),
-                    blog.getAuthorEmail(),
-                    blog.getTitle(),
-                    blog.getContent()
-        ))
+                .map(this::toResponse)
                 .toList();
     }
 
@@ -107,12 +97,7 @@ public class BlogService{
                 request.getContent()
         );
 
-        return new BlogResponse(
-                blog.getId(),
-                blog.getAuthorEmail(),
-                blog.getTitle(),
-                blog.getContent()
-        );
+        return toResponse(blog);
     }
 
     @Transactional
